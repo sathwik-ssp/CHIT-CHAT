@@ -1,0 +1,8 @@
+# Ignore IntelliJ
+.idea/
+
+# Ignore all node modules everywhere
+node_modules/
+
+# Ignore environment files (future)
+.env
