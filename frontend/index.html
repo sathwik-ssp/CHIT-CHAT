@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CHIT-CHAT MVP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            background: white;
+            width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        li {
+            background: #e3f2fd;
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+
+        input {
+            width: 70%;
+            padding: 8px;
+        }
+
+        button {
+            padding: 8px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="chat-container">
+
+<h1>CHIT-CHAT 💬</h1>
+
+
+
+<ul id="messageList"></ul>
+
+<input type="text" id="messageInput" placeholder="Type a message">
+<button onclick="sendMessage()">Send</button>
+
+    <script>
+        async function loadMessages() {
+            const response = await fetch("http://localhost:5000/messages");
+            const data = await response.json();
+
+            const list = document.getElementById("messageList");
+            list.innerHTML = "";
+
+            data.forEach(msg => {
+                const li = document.createElement("li");
+                li.textContent = msg.text;
+                list.appendChild(li);
+            });
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById("messageInput");
+            const text = input.value;
+
+            if (!text) {
+                alert("Please enter a message");
+                return;
+            }
+
+            await fetch("http://localhost:5000/messages", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text })
+            });
+
+            input.value = "";
+            loadMessages();
+        }
+
+        loadMessages();
+    </script>
+
+</div>
+</body>
+</html>
