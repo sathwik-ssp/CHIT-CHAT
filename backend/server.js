@@ -11,10 +11,11 @@ app.use(express.json());
 app.use(cors());
 
 const messages = [
-  { id: 1, text: "Hello 👋" },
-  { id: 2, text: "How are you?" },
-  { id: 3, text: "This is CHIT-CHAT MVP 🚀" }
+  { id: 1, username: "Admin", text: "Hello 👋" },
+  { id: 2, username: "Admin", text: "How are you?" },
+  { id: 3, username: "Admin", text: "This is CHIT-CHAT MVP 🚀" }
 ];
+
 
 app.get("/", (req, res) => {
   res.json({
@@ -29,16 +30,17 @@ app.get("/messages", (req, res) => {
 });
 
 app.post("/messages", (req, res) => {
-  const { text } = req.body;
+  const { username, text } = req.body;
 
-  if (!text) {
+  if (!username || !text) {
     return res.status(400).json({
-      error: "Message text is required"
+      error: "Username and message text are required"
     });
   }
 
   const newMessage = {
     id: messages.length + 1,
+    username,
     text
   };
 

@@ -63,9 +63,12 @@
 <input type="text" id="messageInput" placeholder="Type a message">
 <button onclick="sendMessage()">Send</button>
 
+
     <script>
+        const BASE_URL = "https://chit-chat-19q9.onrender.com";
         async function loadMessages() {
-            const response = await fetch("http://localhost:5000/messages");
+            const response = await fetch(`${BASE_URL}/messages`);
+
             const data = await response.json();
 
             const list = document.getElementById("messageList");
@@ -87,7 +90,7 @@
                 return;
             }
 
-            await fetch("http://localhost:5000/messages", {
+            await fetch(`${BASE_URL}/messages`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
