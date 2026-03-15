@@ -11,9 +11,9 @@ app.use(express.json());
 app.use(cors());
 
 const messages = [
-  { id: 1, username: "Admin", text: "Hello 👋" },
-  { id: 2, username: "Admin", text: "How are you?" },
-  { id: 3, username: "Admin", text: "This is CHIT-CHAT MVP 🚀" }
+  { id: 1, username: "Admin", text: "Hello 👋", time: "10:00 AM" },
+  { id: 2, username: "Admin", text: "How are you?", time: "10:01 AM" },
+  { id: 3, username: "Admin", text: "This is CHIT-CHAT MVP 🚀", time: "10:02 AM" }
 ];
 
 
@@ -41,7 +41,8 @@ app.post("/messages", (req, res) => {
   const newMessage = {
     id: messages.length + 1,
     username,
-    text
+    text,
+    time: new Date().toLocaleTimeString()
   };
 
   messages.push(newMessage);

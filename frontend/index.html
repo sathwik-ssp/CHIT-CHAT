@@ -78,7 +78,8 @@
 
             data.forEach(msg => {
                 const li = document.createElement("li");
-                li.textContent = msg.username+": "+msg.text;
+                const time = msg.time ? " (" + msg.time + ")" : "";
+li.textContent = msg.username + time + ": " + msg.text;
                 list.appendChild(li);
             });
             list.scrollTop = list.scrollHeight;
