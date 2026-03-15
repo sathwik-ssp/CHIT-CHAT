@@ -42,7 +42,11 @@ app.post("/messages", (req, res) => {
     id: messages.length + 1,
     username,
     text,
-    time: new Date().toLocaleTimeString()
+    time: new Date().toLocaleTimeString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      hour: "2-digit",
+      minute: "2-digit"
+    })
   };
 
   messages.push(newMessage);
