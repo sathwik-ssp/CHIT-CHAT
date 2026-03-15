@@ -60,8 +60,10 @@
 
 <ul id="messageList"></ul>
 
-<input type="text" id="messageInput" placeholder="Type a message">
-<button onclick="sendMessage()">Send</button>
+    <input type="text" id="usernameInput" placeholder="Your name">
+    <br><br>
+    <input type="text" id="messageInput" placeholder="Type a message">
+    <button onclick="sendMessage()">Send</button>
 
 
     <script>
@@ -76,31 +78,32 @@
 
             data.forEach(msg => {
                 const li = document.createElement("li");
-                li.textContent = msg.text;
+                li.textContent = msg.username+": "+msg.text;
                 list.appendChild(li);
             });
+            list.scrollTop = list.scrollHeight;
         }
 
         async function sendMessage() {
-            const input = document.getElementById("messageInput");
-            const text = input.value;
+    const username = document.getElementById("usernameInput").value;
+    const text = document.getElementById("messageInput").value;
 
-            if (!text) {
-                alert("Please enter a message");
-                return;
-            }
+    if (!username || !text) {
+        alert("Please enter username and message");
+        return;
+    }
 
-            await fetch(`${BASE_URL}/messages`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ text })
-            });
+    await fetch("https://chit-chat-19q9.onrender.com/messages", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, text })
+    });
 
-            input.value = "";
-            loadMessages();
-        }
+    document.getElementById("messageInput").value = "";
+    loadMessages();
+}
 
         loadMessages();
     </script>
